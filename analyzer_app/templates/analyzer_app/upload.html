@@ -1,5 +1,28 @@
-<form method="POST" enctype="multipart/form-data" action="/upload/">
-    {% csrf_token %}
-    {{ form.as_p }}
-    <button type="submit">Upload File</button>
-</form>
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Upload Hyperspectral File</title>
+</head>
+<body>
+    <h1>Upload Hyperspectral Image</h1>
+
+    <!-- Upload form -->
+    <form method="post" enctype="multipart/form-data">
+        {% csrf_token %}
+        {{ form.as_p }}
+        <button type="submit">Upload</button>
+    </form>
+
+    <!-- Show uploaded file (image or link) if available -->
+    {% if file_url %}
+        <h2>Uploaded File:</h2>
+
+        <!-- Try showing it as an image (if it's displayable) -->
+        <img src="{{ file_url }}" alt="Uploaded Image" style="max-width: 600px; max-height: 400px;">
+
+        <!-- Also offer a download link just in case -->
+        <p><a href="{{ file_url }}" download>Download File</a></p>
+    {% endif %}
+</body>
+</html>
