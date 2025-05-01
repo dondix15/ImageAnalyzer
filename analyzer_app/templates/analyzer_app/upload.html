@@ -12,8 +12,10 @@
         {% csrf_token %}
         {{ form.as_p }}
         <button type="submit">Upload</button>
-    </form>
-
+    </form>    
+    <!-- Add a "Reset" button or link -->
+    <a href="{% url 'upload_file' %}" class="btn btn-secondary">Reset</a>
+    
     <!-- Show uploaded file (image or link) if available -->
     {% if file_url %}
         <h2>Uploaded File:</h2>
