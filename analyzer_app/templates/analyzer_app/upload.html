@@ -1,31 +1,52 @@
-<!DOCTYPE html>
-<html lang="en">
-<head>
-    <meta charset="UTF-8">
-    <title>Upload Hyperspectral File</title>
-</head>
-<body>
-    <h1>Upload Hyperspectral Image</h1>
+{% extends 'analyzer_app/base.html' %}
+
+{% block title %}Upload Hyperspectral Image{% endblock %}
+
+{% block navbar %}
+<nav class="navbar navbar-expand-lg navbar-dark bg-dark">
+    <div class="container-fluid">
+      <a class="navbar-brand" href="#">Image Analyzer</a>
+      <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNav">
+        <span class="navbar-toggler-icon"></span>
+      </button>
+      <div class="collapse navbar-collapse" id="navbarNav">
+        <ul class="navbar-nav ms-auto">
+          <li class="nav-item"><a class="nav-link" href="{% url 'home' %}">Home</a></li>
+          <li class="nav-item"><a class="nav-link" href="{% url 'show_images' %}">View Images</a></li>
+        </ul>
+      </div>
+    </div>
+</nav>
+{% endblock %}
+
+{% block content %}
+<div class="container mt-5">
+    <h1 class="mb-4">Upload Hyperspectral Image</h1>
 
     <!-- Upload form -->
     <form method="post" enctype="multipart/form-data">
         {% csrf_token %}
-        {{ form }}
-        <button type="submit">Upload</button>
-    </form>   
-    <!-- Add a "Reset" button or link -->
-    <a href="{% url 'upload_file' %}?reset=true" class="btn btn-secondary">Reset</a>
-    
-    <!-- Show uploaded file (image or link) if available -->
+        <div class="form-group">
+            {{ form.as_p }}
+        </div>
+        <button type="submit" class="btn btn-primary">Upload</button>
+    </form>
+
+    <!-- Reset button -->
+    <a href="{% url 'home' %}?reset=true" class="btn btn-secondary mt-3">Home</a>
+
+    <!-- Show uploaded files -->
     {% if file_urls %}
-        <h2>Uploaded Files:</h2>
+    <h2 class="mt-4">Uploaded Files:</h2>
+    <div class="row">
         {% for url in file_urls %}
-        <!-- Try showing it as an image (if it's displayable) -->
-            <img src="{{ url }}" alt="Uploaded Image" style="max-width: 600px; max-height: 400px;">
+        <div class="col-md-4 mb-3">
+            <!-- Display image if it's displayable -->
+            <img src="{{ url }}" alt="Uploaded Image" class="img-fluid" style="max-width: 100%; max-height: 400px;">
+        </div>
         {% endfor %}
-        <!-- Also offer a download link just in case -->
-        <p><a href="{{ file_url }}" download>Download File</a></p>
-        
+    </div>
+    <p><a href="{{ file_urls.0 }}" download class="btn btn-success">Download File</a></p>
     {% endif %}
-</body>
-</html>
+</div>
+{% endblock %}

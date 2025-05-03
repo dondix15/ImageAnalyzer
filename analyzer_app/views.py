@@ -2,7 +2,7 @@ import os
 from django.http import HttpResponse
 from django.core.files.storage import FileSystemStorage
 from django.conf import settings
-from django.shortcuts import render
+from django.shortcuts import redirect, render
 
 from imageAnalyzer.settings import BASE_DIR
 from .forms import UploadFileForm
@@ -13,8 +13,6 @@ MEDIA_URL = '/media/'
 # views.py handles the file upload
 def home(request):
     return render(request, "analyzer_app/homepage.html")
-from django.shortcuts import render
-from .forms import UploadFileForm
 
 def upload_file(request):
     delete_previous_images()
@@ -34,7 +32,7 @@ def upload_file(request):
                 print(f"File uploaded: {filename}")
             
             # After uploading, return the homepage
-            return render(request, "analyzer_app/homepage.html")
+            return redirect('show_images')
     else:
         form = UploadFileForm()
     
