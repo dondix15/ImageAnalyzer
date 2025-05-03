@@ -1,0 +1,27 @@
+{% extends 'analyzer_app/base.html' %}
+
+{% block title %}Processed Images{% endblock %}
+
+{% block content %}
+<h2 class="mb-4">Processed Images</h2>
+
+<div class="mb-3">
+    <a href="/upload/" class="btn btn-primary">Go to Uploads</a>
+    <a href="/" class="btn btn-secondary">Back to Homepage</a>
+</div>
+
+<div class="row">
+    {% for image in filtered_images %}
+        <div class="col-md-4 mb-4">
+            <div class="card shadow-sm">
+                <img src="{{ MEDIA_URL }}" class="card-img-top" alt="Filtered Image">
+                <div class="card-body">
+                    <p class="card-text text-center">{{ image|basename }}</p>
+                </div>
+            </div>
+        </div>
+    {% empty %}
+        <p>No filtered images found.</p>
+    {% endfor %}
+</div>
+{% endblock %}

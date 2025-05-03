@@ -10,21 +10,22 @@
     <!-- Upload form -->
     <form method="post" enctype="multipart/form-data">
         {% csrf_token %}
-        {{ form.as_p }}
+        {{ form }}
         <button type="submit">Upload</button>
-    </form>    
+    </form>   
     <!-- Add a "Reset" button or link -->
-    <a href="{% url 'upload_file' %}" class="btn btn-secondary">Reset</a>
+    <a href="{% url 'upload_file' %}?reset=true" class="btn btn-secondary">Reset</a>
     
     <!-- Show uploaded file (image or link) if available -->
-    {% if file_url %}
-        <h2>Uploaded File:</h2>
-
+    {% if file_urls %}
+        <h2>Uploaded Files:</h2>
+        {% for url in file_urls %}
         <!-- Try showing it as an image (if it's displayable) -->
-        <img src="{{ file_url }}" alt="Uploaded Image" style="max-width: 600px; max-height: 400px;">
-
+            <img src="{{ url }}" alt="Uploaded Image" style="max-width: 600px; max-height: 400px;">
+        {% endfor %}
         <!-- Also offer a download link just in case -->
         <p><a href="{{ file_url }}" download>Download File</a></p>
+        
     {% endif %}
 </body>
 </html>
