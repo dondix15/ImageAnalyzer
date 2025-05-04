@@ -29,12 +29,9 @@
 
 <div class="row">
     {% for image in filtered_images %}
-        <div class="col-md-4 mb-4">
+        <div class="col-md-6 mb-4">
             <div class="card shadow-sm">
-                <img src="/media/{{ image }}" class="card-img-top" alt="Filtered Image" style="height: 200px; object-fit: cover;">
-                <div class="card-body">
-                    <p class="card-text text-center">{{ image }}</p>
-                </div>
+                <img src="/media/{{ image }}" class="card-img-top img-fluid" alt="Filtered Image" style="height: 350px; object-fit: cover;">
             </div>
         </div>
     {% empty %}
