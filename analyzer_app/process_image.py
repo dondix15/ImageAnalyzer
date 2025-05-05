@@ -66,10 +66,8 @@ class FilterImage:
                 green_val = g[i, j]
                 blue_val = b[i, j]
 
-                # Apply the condition manually
                 if red_val > 0.6 and green_val < 0.4 and blue_val < 0.4:
                     mask[i, j] = True
-
 
         print(f"{np.count_nonzero(mask)} pixels selected for spectral averaging.")
 
