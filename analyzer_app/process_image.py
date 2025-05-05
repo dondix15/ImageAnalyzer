@@ -15,7 +15,7 @@ class FilterImage:
         self.num_bands = self.image.shape[0]
         self.wavelengths = np.linspace(400, 2500, self.num_bands)
 
-        # Stretch RGB channels
+        # Stretch RGB channels and put them into a 2d array
         red = self.stretch_contrast(self.image[red_band])
         green = self.stretch_contrast(self.image[green_band])
         blue = self.stretch_contrast(self.image[blue_band])
@@ -53,7 +53,24 @@ class FilterImage:
         b = self.rgb[:, :, 2]
 
         # Mask: Red bright, Green & Blue dark (e.g., vegetation or water-like)
-        mask = (r > 0.6) & (g < 0.4) & (b < 0.4)
+        # Create an empty boolean array for the mask, same shape as a single band
+        mask = np.zeros_like(r, dtype=bool)
+
+        # Get the image dimensions
+        rows, cols = r.shape
+
+        # Loop over every pixel in the image
+        for i in range(rows):
+            for j in range(cols):
+                red_val = r[i, j]
+                green_val = g[i, j]
+                blue_val = b[i, j]
+
+                # Apply the condition manually
+                if red_val > 0.6 and green_val < 0.4 and blue_val < 0.4:
+                    mask[i, j] = True
+
+
         print(f"{np.count_nonzero(mask)} pixels selected for spectral averaging.")
 
         # ----- Extract and average spectra -----
